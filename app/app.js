@@ -2,16 +2,23 @@
 const geocode = require('./utils/geocode');
 const weather = require('./utils/weather');
 
-geocode.geocode('New York', (geocodeError, geocodeData) => {
+const address = process.argv[2];
+
+if (!address) {
+    console.log('Please, provide an address.');
+    return;
+}
+
+geocode.geocode(address, (geocodeError, {latitude, longitude, location}) => {
     if (geocodeError) {
         return console.log(geocodeError);
     }
 
-    weather.forecast(geocodeData.latitude, geocodeData.longitude, (forecastError, forecastData) => {
+    weather.forecast(latitude, longitude, (forecastError, forecastData) => {
         if (forecastError) {
             return console.log(forecastError);
         }
-        console.log(geocodeData.location);
+        console.log(location);
         console.log(forecastData);
     });
 })
