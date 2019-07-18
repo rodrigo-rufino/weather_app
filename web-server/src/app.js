@@ -2,6 +2,9 @@ const path = require('path');
 const express = require('express');
 const hbs = require('hbs');
 
+const geocode = require('./utils/geocode');
+const weather = require('./utils/weather');
+
 const app = express();
 const publicDirectoryPath = path.join(__dirname, '../public');
 const viewsPath = path.join(__dirname, '../templates/views');
@@ -39,11 +42,27 @@ app.get('/help', (req, res) => {
 });
 
 app.get('/weather', (req, res) => {
-    res.send({
-        title: 'Weather',
-        forecast: 'Sun.',
-        location: 'Santa Rita do Sapucai'
-    });
+    const address = req.query.address;
+
+    if (!address) {
+        return res.send({
+            error: 'You must provide an Address.'
+        });
+    }
+    
+    geocode.geocode(address, (geocodeError, {latitude, longitude, location}) => {
+        if (geocodeError) return res.send( {error: geocodeError});
+    
+        weather.forecast(latitude, longitude, (forecastError, forecastData) => {
+            if (forecastError) return res.send( {error: weatherError});
+
+            res.send({
+                address,
+                location,
+                forecast: forecastData
+            });
+        });
+    })
 });
 
 app.get('/help/*', (req, res) => {
