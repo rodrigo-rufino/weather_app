@@ -18,7 +18,7 @@ app.use(express.static(publicDirectoryPath));
 // endpoints
 app.get('', (req, res) => {
     res.render('index', {
-        title: 'Weather App',
+        title: 'Weather',
         name: 'Rodrigo'
     });
 });
@@ -56,9 +56,9 @@ app.get('/help/*', (req, res) => {
 
 app.get('*', (req, res) => {
     res.render('error', {
-        title: 'Error',
+        title: '404',
         name: 'Rodrigo',
-        errorMessage: 'Page not found. Error 404.'
+        errorMessage: 'Page not found.'
     });
 });
 
