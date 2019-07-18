@@ -15,7 +15,7 @@ hbs.registerPartials(partialsPath);
 // static directory
 app.use(express.static(publicDirectoryPath));
 
-// creating endpoints
+// endpoints
 app.get('', (req, res) => {
     res.render('index', {
         title: 'Weather App',
@@ -46,7 +46,23 @@ app.get('/weather', (req, res) => {
     });
 });
 
+app.get('/help/*', (req, res) => {
+    res.render('error', {
+        title: 'Error',
+        name: 'Rodrigo',
+        errorMessage: 'Help article not found.'
+    });
+});
+
+app.get('*', (req, res) => {
+    res.render('error', {
+        title: 'Error',
+        name: 'Rodrigo',
+        errorMessage: 'Page not found. Error 404.'
+    });
+});
+
 
 app.listen(3000, () => {
     console.log('Server is up on port 3000.');
-})
+});
