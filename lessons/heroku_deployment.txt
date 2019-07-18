@@ -1,0 +1,15 @@
+heroku keys:add
+heroku create <application_name>
+heroku git:remote -a rrr-weather-app
+git push heroku master
+
+# in case of error:
+1- go to devcenter.heroku site (site suggest in error message)
+2- in terminal, run: heroku buildpacks:set heroku/nodejs
+3- tried running: git push heroku master
+4- that failed, giving error saying needed to put package.json at root of top level directory (Node Course folder)
+5- copied and pasted package.json and package-lock.json to Node Course folder in My Computer
+6- run: git add .
+7- run: git push
+8- run: git commit -m '"fix"
+9- run: git push heroku master. Finally deployed app
