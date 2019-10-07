@@ -1,7 +1,8 @@
-heroku keys:add
 heroku create <application_name>
+// create start script "start": "node ./src/index.js"
 heroku git:remote -a rrr-weather-app
 git push heroku master
+
 
 # in case of error:
 1- go to devcenter.heroku site (site suggest in error message)
